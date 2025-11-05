@@ -15,8 +15,14 @@ dependencies:
 
   # قاعدة البيانات والتخزين
   sqflite: ^2.3.0
+  sqflite_common_ffi: ^2.3.0  # For desktop support
   path_provider: ^2.1.1
   shared_preferences: ^2.2.2
+
+  # Multi-database support
+  mssql_connection: ^1.3.0  # SQL Server
+  postgres: ^2.7.2  # PostgreSQL
+  mysql1: ^0.20.0  # MySQL
 
   # إدارة الحالة
   provider: ^6.1.1
