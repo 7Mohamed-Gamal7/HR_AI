@@ -60,7 +60,7 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
               .map((model) => model.toEntity())
               .toList();
           return Right(employees);
-        } on ServerException catch (e) {
+        } on ServerException {
           // If remote fetch fails, fall back to cache
           return _getEmployeesFromCache(
             departmentId: departmentId,
@@ -123,7 +123,7 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
           final remoteEmployee = await _remoteDataSource.getEmployeeById(id);
           await _localDataSource.cacheEmployee(remoteEmployee);
           return Right(remoteEmployee.toEntity());
-        } on ServerException catch (e) {
+        } on ServerException {
           return _getEmployeeByIdFromCache(id);
         }
       } else {
@@ -158,7 +158,7 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
           );
           await _localDataSource.cacheEmployee(remoteEmployee);
           return Right(remoteEmployee.toEntity());
-        } on ServerException catch (e) {
+        } on ServerException {
           return _getEmployeeByCodeFromCache(code);
         }
       } else {
@@ -296,7 +296,7 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
               .map((model) => model.toEntity())
               .toList();
           return Right(departments);
-        } on ServerException catch (e) {
+        } on ServerException {
           return _getDepartmentsFromCache(isActive: isActive);
         }
       } else {
@@ -339,7 +339,7 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
           );
           await _localDataSource.cacheDepartment(remoteDepartment);
           return Right(remoteDepartment.toEntity());
-        } on ServerException catch (e) {
+        } on ServerException {
           return _getDepartmentByIdFromCache(id);
         }
       } else {
@@ -479,7 +479,7 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
               .map((model) => model.toEntity())
               .toList();
           return Right(positions);
-        } on ServerException catch (e) {
+        } on ServerException {
           return _getPositionsFromCache(
             departmentId: departmentId,
             isActive: isActive,
@@ -528,7 +528,7 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
           final remotePosition = await _remoteDataSource.getPositionById(id);
           await _localDataSource.cachePosition(remotePosition);
           return Right(remotePosition.toEntity());
-        } on ServerException catch (e) {
+        } on ServerException {
           return _getPositionByIdFromCache(id);
         }
       } else {
