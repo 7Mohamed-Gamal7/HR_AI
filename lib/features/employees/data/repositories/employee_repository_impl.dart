@@ -56,9 +56,8 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
           await _localDataSource.cacheEmployees(remoteEmployees);
 
           // Convert to domain entities
-          final employees = remoteEmployees
-              .map((model) => model.toEntity())
-              .toList();
+          final employees =
+              remoteEmployees.map((model) => model.toEntity()).toList();
           return Right(employees);
         } on ServerException {
           // If remote fetch fails, fall back to cache
@@ -104,9 +103,8 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
         offset: offset,
       );
 
-      final employees = cachedEmployees
-          .map((model) => model.toEntity())
-          .toList();
+      final employees =
+          cachedEmployees.map((model) => model.toEntity()).toList();
       return Right(employees);
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));
@@ -189,7 +187,7 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
       final isConnected = await _networkInfo.isConnected;
 
       if (!isConnected) {
-        return Left(
+        return const Left(
           NetworkFailure(
             message: 'No internet connection. Cannot create employee.',
           ),
@@ -222,7 +220,7 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
       final isConnected = await _networkInfo.isConnected;
 
       if (!isConnected) {
-        return Left(
+        return const Left(
           NetworkFailure(
             message: 'No internet connection. Cannot update employee.',
           ),
@@ -255,7 +253,7 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
       final isConnected = await _networkInfo.isConnected;
 
       if (!isConnected) {
-        return Left(
+        return const Left(
           NetworkFailure(
             message: 'No internet connection. Cannot delete employee.',
           ),
@@ -292,9 +290,8 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
 
           await _localDataSource.cacheDepartments(remoteDepartments);
 
-          final departments = remoteDepartments
-              .map((model) => model.toEntity())
-              .toList();
+          final departments =
+              remoteDepartments.map((model) => model.toEntity()).toList();
           return Right(departments);
         } on ServerException {
           return _getDepartmentsFromCache(isActive: isActive);
@@ -318,9 +315,8 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
         isActive: isActive,
       );
 
-      final departments = cachedDepartments
-          .map((model) => model.toEntity())
-          .toList();
+      final departments =
+          cachedDepartments.map((model) => model.toEntity()).toList();
       return Right(departments);
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));
@@ -372,7 +368,7 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
       final isConnected = await _networkInfo.isConnected;
 
       if (!isConnected) {
-        return Left(
+        return const Left(
           NetworkFailure(
             message: 'No internet connection. Cannot create department.',
           ),
@@ -404,7 +400,7 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
       final isConnected = await _networkInfo.isConnected;
 
       if (!isConnected) {
-        return Left(
+        return const Left(
           NetworkFailure(
             message: 'No internet connection. Cannot update department.',
           ),
@@ -436,7 +432,7 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
       final isConnected = await _networkInfo.isConnected;
 
       if (!isConnected) {
-        return Left(
+        return const Left(
           NetworkFailure(
             message: 'No internet connection. Cannot delete department.',
           ),
@@ -475,9 +471,8 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
 
           await _localDataSource.cachePositions(remotePositions);
 
-          final positions = remotePositions
-              .map((model) => model.toEntity())
-              .toList();
+          final positions =
+              remotePositions.map((model) => model.toEntity()).toList();
           return Right(positions);
         } on ServerException {
           return _getPositionsFromCache(
@@ -509,9 +504,8 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
         isActive: isActive,
       );
 
-      final positions = cachedPositions
-          .map((model) => model.toEntity())
-          .toList();
+      final positions =
+          cachedPositions.map((model) => model.toEntity()).toList();
       return Right(positions);
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));
@@ -557,7 +551,7 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
       final isConnected = await _networkInfo.isConnected;
 
       if (!isConnected) {
-        return Left(
+        return const Left(
           NetworkFailure(
             message: 'No internet connection. Cannot create position.',
           ),
@@ -589,7 +583,7 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
       final isConnected = await _networkInfo.isConnected;
 
       if (!isConnected) {
-        return Left(
+        return const Left(
           NetworkFailure(
             message: 'No internet connection. Cannot update position.',
           ),
@@ -621,7 +615,7 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
       final isConnected = await _networkInfo.isConnected;
 
       if (!isConnected) {
-        return Left(
+        return const Left(
           NetworkFailure(
             message: 'No internet connection. Cannot delete position.',
           ),

@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 
 class EmployeeFormScreen extends StatefulWidget {
   final Employee? employee;
-  
+
   const EmployeeFormScreen({super.key, this.employee});
 
   @override
@@ -27,7 +27,7 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
   final _salaryController = TextEditingController();
   final _emergencyContactController = TextEditingController();
   final _emergencyPhoneController = TextEditingController();
-  
+
   DateTime? _dateOfBirth;
   DateTime? _hireDate;
   String? _selectedGender;
@@ -38,15 +38,48 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
   String? _selectedEmploymentType;
   String? _selectedStatus;
   bool _isLoading = false;
-  
+
   final List<String> _genders = ['male', 'female'];
   final List<String> _nationalities = [
-    'سعودي', 'مصري', 'سوري', 'لبناني', 'أردني', 'عراقي', 'يمني', 'سوداني',
-    'مغربي', 'تونسي', 'جزائري', 'ليبي', 'كويتي', 'إماراتي', 'قطري', 'بحريني',
-    'عماني', 'أمريكي', 'بريطاني', 'فرنسي', 'ألماني', 'صيني', 'هندي', 'باكستاني'
+    'سعودي',
+    'مصري',
+    'سوري',
+    'لبناني',
+    'أردني',
+    'عراقي',
+    'يمني',
+    'سوداني',
+    'مغربي',
+    'تونسي',
+    'جزائري',
+    'ليبي',
+    'كويتي',
+    'إماراتي',
+    'قطري',
+    'بحريني',
+    'عماني',
+    'أمريكي',
+    'بريطاني',
+    'فرنسي',
+    'ألماني',
+    'صيني',
+    'هندي',
+    'باكستاني'
   ];
-  final List<String> _employmentTypes = ['دوام كامل', 'دوام جزئي', 'عقد', 'مؤقت', 'تدريب'];
-  final List<String> _statuses = ['نشط', 'غير نشط', 'في إجازة', 'مستقيل', 'مفصول'];
+  final List<String> _employmentTypes = [
+    'دوام كامل',
+    'دوام جزئي',
+    'عقد',
+    'مؤقت',
+    'تدريب'
+  ];
+  final List<String> _statuses = [
+    'نشط',
+    'غير نشط',
+    'في إجازة',
+    'مستقيل',
+    'مفصول'
+  ];
 
   @override
   void initState() {
@@ -72,7 +105,7 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
     _salaryController.text = employee.salary?.toString() ?? '';
     _emergencyContactController.text = employee.emergencyContactName ?? '';
     _emergencyPhoneController.text = employee.emergencyContactPhone ?? '';
-    
+
     _dateOfBirth = employee.dateOfBirth;
     _hireDate = employee.hireDate;
     _selectedGender = employee.gender;
@@ -101,11 +134,16 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
   Future<void> _selectDate(BuildContext context, bool isBirthDate) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: isBirthDate ? (_dateOfBirth ?? DateTime.now().subtract(const Duration(days: 6570))) : (_hireDate ?? DateTime.now()),
+      initialDate: isBirthDate
+          ? (_dateOfBirth ??
+              DateTime.now().subtract(const Duration(days: 6570)))
+          : (_hireDate ?? DateTime.now()),
       firstDate: isBirthDate ? DateTime(1950) : DateTime(2000),
-      lastDate: isBirthDate ? DateTime.now().subtract(const Duration(days: 6570)) : DateTime(2050),
+      lastDate: isBirthDate
+          ? DateTime.now().subtract(const Duration(days: 6570))
+          : DateTime(2050),
     );
-    
+
     if (picked != null) {
       setState(() {
         if (isBirthDate) {
@@ -128,7 +166,7 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
 
     try {
       final appProvider = context.read<AppProvider>();
-      
+
       final employeeData = Employee(
         id: widget.employee?.id,
         employeeNumber: _employeeNumberController.text.trim(),
@@ -136,7 +174,9 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
         lastName: _lastNameController.text.trim(),
         email: _emailController.text.trim(),
         phone: _phoneController.text.trim(),
-        address: _addressController.text.trim().isEmpty ? null : _addressController.text.trim(),
+        address: _addressController.text.trim().isEmpty
+            ? null
+            : _addressController.text.trim(),
         dateOfBirth: _dateOfBirth,
         gender: _selectedGender,
         nationality: _selectedNationality,
@@ -147,8 +187,12 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
         department: _selectedDepartment,
         jobTitle: _selectedJobTitle,
         manager: _selectedManager,
-        emergencyContactName: _emergencyContactController.text.trim().isEmpty ? null : _emergencyContactController.text.trim(),
-        emergencyContactPhone: _emergencyPhoneController.text.trim().isEmpty ? null : _emergencyPhoneController.text.trim(),
+        emergencyContactName: _emergencyContactController.text.trim().isEmpty
+            ? null
+            : _emergencyContactController.text.trim(),
+        emergencyContactPhone: _emergencyPhoneController.text.trim().isEmpty
+            ? null
+            : _emergencyPhoneController.text.trim(),
         createdAt: widget.employee?.createdAt ?? DateTime.now(),
         updatedAt: DateTime.now(),
       );
@@ -163,9 +207,9 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(widget.employee == null 
-              ? 'تم إضافة الموظف بنجاح' 
-              : 'تم تعديل بيانات الموظف بنجاح'),
+            content: Text(widget.employee == null
+                ? 'تم إضافة الموظف بنجاح'
+                : 'تم تعديل بيانات الموظف بنجاح'),
             backgroundColor: AppTheme.successColor,
           ),
         );
@@ -195,7 +239,9 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.employee == null ? 'إضافة موظف جديد' : 'تعديل بيانات الموظف'),
+        title: Text(widget.employee == null
+            ? 'إضافة موظف جديد'
+            : 'تعديل بيانات الموظف'),
         actions: [
           if (_isLoading)
             const Padding(
@@ -224,7 +270,7 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
               // المعلومات الأساسية
               _buildSectionHeader('المعلومات الأساسية'),
               const SizedBox(height: 16),
-              
+
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -247,7 +293,7 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
                   const SizedBox(width: 16),
                   Expanded(
                     child: DropdownButtonFormField<String>(
-                      value: _selectedStatus,
+                      initialValue: _selectedStatus,
                       decoration: const InputDecoration(
                         labelText: 'الحالة *',
                         prefixIcon: Icon(Icons.info_outline),
@@ -274,7 +320,7 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
                 ],
               ),
               const SizedBox(height: 16),
-              
+
               Row(
                 children: [
                   Expanded(
@@ -313,12 +359,12 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
                 ],
               ),
               const SizedBox(height: 16),
-              
+
               Row(
                 children: [
                   Expanded(
                     child: DropdownButtonFormField<String>(
-                      value: _selectedGender,
+                      initialValue: _selectedGender,
                       decoration: const InputDecoration(
                         labelText: 'الجنس *',
                         prefixIcon: Icon(Icons.wc),
@@ -352,9 +398,9 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
                           prefixIcon: Icon(Icons.calendar_today),
                         ),
                         child: Text(
-                          _dateOfBirth == null 
-                            ? 'اختر التاريخ' 
-                            : DateFormat('yyyy-MM-dd').format(_dateOfBirth!),
+                          _dateOfBirth == null
+                              ? 'اختر التاريخ'
+                              : DateFormat('yyyy-MM-dd').format(_dateOfBirth!),
                         ),
                       ),
                     ),
@@ -362,9 +408,9 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
                 ],
               ),
               const SizedBox(height: 16),
-              
+
               DropdownButtonFormField<String>(
-                value: _selectedNationality,
+                initialValue: _selectedNationality,
                 decoration: const InputDecoration(
                   labelText: 'الجنسية',
                   prefixIcon: Icon(Icons.flag),
@@ -381,13 +427,13 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
                   });
                 },
               ),
-              
+
               const SizedBox(height: 24),
-              
+
               // معلومات الاتصال
               _buildSectionHeader('معلومات الاتصال'),
               const SizedBox(height: 16),
-              
+
               TextFormField(
                 controller: _emailController,
                 decoration: const InputDecoration(
@@ -407,7 +453,7 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
                 },
               ),
               const SizedBox(height: 16),
-              
+
               TextFormField(
                 controller: _phoneController,
                 decoration: const InputDecoration(
@@ -424,7 +470,7 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
                 },
               ),
               const SizedBox(height: 16),
-              
+
               TextFormField(
                 controller: _addressController,
                 decoration: const InputDecoration(
@@ -434,18 +480,18 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
                 ),
                 maxLines: 2,
               ),
-              
+
               const SizedBox(height: 24),
-              
+
               // معلومات التوظيف
               _buildSectionHeader('معلومات التوظيف'),
               const SizedBox(height: 16),
-              
+
               Row(
                 children: [
                   Expanded(
                     child: DropdownButtonFormField<Department>(
-                      value: _selectedDepartment,
+                      initialValue: _selectedDepartment,
                       decoration: const InputDecoration(
                         labelText: 'القسم *',
                         prefixIcon: Icon(Icons.domain),
@@ -459,7 +505,8 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
                       onChanged: (department) {
                         setState(() {
                           _selectedDepartment = department;
-                          _selectedJobTitle = null; // إعادة تعيين المسمى الوظيفي
+                          _selectedJobTitle =
+                              null; // إعادة تعيين المسمى الوظيفي
                         });
                       },
                       validator: (value) {
@@ -473,17 +520,18 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
                   const SizedBox(width: 16),
                   Expanded(
                     child: DropdownButtonFormField<JobTitle>(
-                      value: _selectedJobTitle,
+                      initialValue: _selectedJobTitle,
                       decoration: const InputDecoration(
                         labelText: 'المسمى الوظيفي *',
                         prefixIcon: Icon(Icons.work_outline),
                       ),
                       items: _selectedDepartment?.jobTitles.map((jobTitle) {
-                        return DropdownMenuItem(
-                          value: jobTitle,
-                          child: Text(jobTitle.name),
-                        );
-                      }).toList() ?? [],
+                            return DropdownMenuItem(
+                              value: jobTitle,
+                              child: Text(jobTitle.name),
+                            );
+                          }).toList() ??
+                          [],
                       onChanged: (jobTitle) {
                         setState(() {
                           _selectedJobTitle = jobTitle;
@@ -500,12 +548,12 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
                 ],
               ),
               const SizedBox(height: 16),
-              
+
               Row(
                 children: [
                   Expanded(
                     child: DropdownButtonFormField<String>(
-                      value: _selectedEmploymentType,
+                      initialValue: _selectedEmploymentType,
                       decoration: const InputDecoration(
                         labelText: 'نوع التوظيف *',
                         prefixIcon: Icon(Icons.work),
@@ -539,9 +587,9 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
                           prefixIcon: Icon(Icons.calendar_today),
                         ),
                         child: Text(
-                          _hireDate == null 
-                            ? 'اختر التاريخ' 
-                            : DateFormat('yyyy-MM-dd').format(_hireDate!),
+                          _hireDate == null
+                              ? 'اختر التاريخ'
+                              : DateFormat('yyyy-MM-dd').format(_hireDate!),
                         ),
                       ),
                     ),
@@ -549,7 +597,7 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
                 ],
               ),
               const SizedBox(height: 16),
-              
+
               TextFormField(
                 controller: _salaryController,
                 decoration: const InputDecoration(
@@ -569,11 +617,11 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
                   return null;
                 },
               ),
-              
+
               const SizedBox(height: 16),
-              
+
               DropdownButtonFormField<Employee>(
-                value: _selectedManager,
+                initialValue: _selectedManager,
                 decoration: const InputDecoration(
                   labelText: 'المدير المباشر',
                   prefixIcon: Icon(Icons.supervisor_account),
@@ -586,7 +634,8 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
                   ...appProvider.employees.map((employee) {
                     return DropdownMenuItem(
                       value: employee,
-                      child: Text('${employee.employeeNumber} - ${employee.fullName}'),
+                      child: Text(
+                          '${employee.employeeNumber} - ${employee.fullName}'),
                     );
                   }),
                 ],
@@ -596,13 +645,13 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
                   });
                 },
               ),
-              
+
               const SizedBox(height: 24),
-              
+
               // معلومات الطوارئ
               _buildSectionHeader('معلومات الطوارئ'),
               const SizedBox(height: 16),
-              
+
               TextFormField(
                 controller: _emergencyContactController,
                 decoration: const InputDecoration(
@@ -612,7 +661,7 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
                 ),
               ),
               const SizedBox(height: 16),
-              
+
               TextFormField(
                 controller: _emergencyPhoneController,
                 decoration: const InputDecoration(
@@ -622,15 +671,16 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
                 ),
                 keyboardType: TextInputType.phone,
               ),
-              
+
               const SizedBox(height: 32),
-              
+
               // أزرار الحفظ والإلغاء
               Row(
                 children: [
                   Expanded(
                     child: OutlinedButton(
-                      onPressed: _isLoading ? null : () => Navigator.pop(context),
+                      onPressed:
+                          _isLoading ? null : () => Navigator.pop(context),
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 16),
                       ),
@@ -646,17 +696,19 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
                         backgroundColor: AppTheme.primaryColor,
                       ),
                       child: _isLoading
-                        ? const SizedBox(
-                            width: 24,
-                            height: 24,
-                            child: CircularProgressIndicator(strokeWidth: 2),
-                          )
-                        : Text(widget.employee == null ? 'إضافة موظف' : 'حفظ التغييرات'),
+                          ? const SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                          : Text(widget.employee == null
+                              ? 'إضافة موظف'
+                              : 'حفظ التغييرات'),
                     ),
                   ),
                 ],
               ),
-              
+
               const SizedBox(height: 16),
             ],
           ),
@@ -674,7 +726,7 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
       ),
       child: Text(
         title,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
           color: AppTheme.primaryColor,

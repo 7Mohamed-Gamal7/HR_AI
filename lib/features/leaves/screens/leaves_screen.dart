@@ -7,7 +7,7 @@ import 'package:hr_management/core/widgets/custom_drawer.dart';
 import 'package:hr_management/core/widgets/responsive.dart';
 
 class LeavesScreen extends StatefulWidget {
-  const LeavesScreen({Key? key}) : super(key: key);
+  const LeavesScreen({super.key});
 
   @override
   State<LeavesScreen> createState() => _LeavesScreenState();
@@ -41,8 +41,8 @@ class _LeavesScreenState extends State<LeavesScreen> {
         onPressed: () {
           // TODO: Implement add leave request dialog
         },
-        child: const Icon(Icons.add),
         tooltip: 'إضافة طلب إجازة',
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -113,10 +113,19 @@ class _LeavesScreenState extends State<LeavesScreen> {
     return const Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Card(child: Padding(padding: EdgeInsets.all(16.0), child: Text('إجمالي الطلبات: 0'))),
-        Card(child: Padding(padding: EdgeInsets.all(16.0), child: Text('مقبولة: 0'))),
-        Card(child: Padding(padding: EdgeInsets.all(16.0), child: Text('مرفوضة: 0'))),
-        Card(child: Padding(padding: EdgeInsets.all(16.0), child: Text('قيد الانتظار: 0'))),
+        Card(
+            child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text('إجمالي الطلبات: 0'))),
+        Card(
+            child: Padding(
+                padding: EdgeInsets.all(16.0), child: Text('مقبولة: 0'))),
+        Card(
+            child: Padding(
+                padding: EdgeInsets.all(16.0), child: Text('مرفوضة: 0'))),
+        Card(
+            child: Padding(
+                padding: EdgeInsets.all(16.0), child: Text('قيد الانتظار: 0'))),
       ],
     );
   }

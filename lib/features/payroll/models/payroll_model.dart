@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
-
 enum PayrollPeriodStatus { open, closed, processed }
+
 enum SalaryComponentType { basic, allowance, deduction, bonus }
+
 enum CalculationType { fixed, percentage }
+
 enum PaymentStatus { pending, paid, failed }
 
 class PayrollPeriod {
@@ -30,7 +31,8 @@ class PayrollPeriod {
       name: map['name'],
       startDate: DateTime.parse(map['start_date']),
       endDate: DateTime.parse(map['end_date']),
-      status: PayrollPeriodStatus.values.firstWhere((e) => e.name == map['status']),
+      status:
+          PayrollPeriodStatus.values.firstWhere((e) => e.name == map['status']),
       createdAt: DateTime.parse(map['created_at']),
       updatedAt: DateTime.parse(map['updated_at']),
     );
@@ -96,13 +98,14 @@ class SalaryComponent {
     required this.updatedAt,
   });
 
-    factory SalaryComponent.fromMap(Map<String, dynamic> map) {
+  factory SalaryComponent.fromMap(Map<String, dynamic> map) {
     return SalaryComponent(
       id: map['id'],
       code: map['code'],
       name: map['name'],
       type: SalaryComponentType.values.firstWhere((e) => e.name == map['type']),
-      calculationType: CalculationType.values.firstWhere((e) => e.name == map['calculation_type']),
+      calculationType: CalculationType.values
+          .firstWhere((e) => e.name == map['calculation_type']),
       amount: map['amount'],
       percentage: map['percentage'],
       isTaxable: map['is_taxable'] == 1,
@@ -195,8 +198,11 @@ class EmployeeSalary {
       totalAllowances: map['total_allowances'],
       totalDeductions: map['total_deductions'],
       netSalary: map['net_salary'],
-      paymentStatus: PaymentStatus.values.firstWhere((e) => e.name == map['payment_status']),
-      paymentDate: map['payment_date'] != null ? DateTime.parse(map['payment_date']) : null,
+      paymentStatus: PaymentStatus.values
+          .firstWhere((e) => e.name == map['payment_status']),
+      paymentDate: map['payment_date'] != null
+          ? DateTime.parse(map['payment_date'])
+          : null,
       notes: map['notes'],
       createdAt: DateTime.parse(map['created_at']),
       updatedAt: DateTime.parse(map['updated_at']),

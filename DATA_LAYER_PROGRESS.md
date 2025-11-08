@@ -92,7 +92,7 @@ This document tracks the progress of Phase 2: Data Layer Implementation for the 
   - Position operations (5+ methods)
   - Dependency injection with @LazySingleton
 
-### 3. Attendance Module Data Layer (IN PROGRESS)
+### 3. Attendance Module Data Layer (COMPLETE) ✅
 
 #### Data Models
 - ✅ `lib/features/attendance/data/models/attendance_model.dart`
@@ -116,19 +116,82 @@ This document tracks the progress of Phase 2: Data Layer Implementation for the 
   - Multi-country support
 
 #### Data Sources
-- ⏳ `lib/features/attendance/data/datasources/attendance_local_datasource.dart` - TO DO
-- ⏳ `lib/features/attendance/data/datasources/attendance_remote_datasource.dart` - TO DO
+- ✅ `lib/features/attendance/data/datasources/attendance_local_datasource.dart`
+  - SQLite-based local storage
+  - Attendance operations (CRUD + special queries)
+  - Attendance Rule operations (CRUD + rule lookup)
+  - Holiday operations (CRUD + date checking)
+  - Complex SQL queries with JOINs
+  - Comprehensive error handling
+
+- ✅ `lib/features/attendance/data/datasources/attendance_remote_datasource.dart`
+  - API-based remote data access
+  - Attendance operations (CRUD + check-in/check-out)
+  - Attendance Rule operations (CRUD + rule lookup)
+  - Holiday operations (CRUD + date checking)
+  - RESTful endpoint integration
 
 #### Repository Implementation
-- ⏳ `lib/features/attendance/data/repositories/attendance_repository_impl.dart` - TO DO
+- ✅ `lib/features/attendance/data/repositories/attendance_repository_impl.dart`
+  - **Offline-First Architecture** implemented
+  - Attendance operations (8 methods)
+  - Attendance Rule operations (7 methods)
+  - Holiday operations (5 methods)
+  - Network connectivity checking
+  - Automatic caching
+  - Fallback to cache when offline
+  - Comprehensive error handling
+
+### 4. Leave Management Module Data Layer (COMPLETE) ✅
+
+#### Data Models
+- ✅ `lib/features/leaves/data/models/leave_type_model.dart`
+  - Leave type configuration with default/max days
+  - Carry forward settings
+  - Approval and document requirements
+  - Paid/unpaid classification
+
+- ✅ `lib/features/leaves/data/models/leave_request_model.dart`
+  - Leave request with approval workflow
+  - Employee and leave type relationships
+  - Date range and duration tracking
+  - Status management (pending, approved, rejected, cancelled)
+  - Approver information and timestamps
+
+- ✅ `lib/features/leaves/data/models/leave_balance_model.dart`
+  - Employee leave balance tracking
+  - Total, used, pending, remaining days
+  - Carried forward days support
+  - Year-based tracking
+
+#### Data Sources
+- ✅ `lib/features/leaves/data/datasources/leave_local_datasource.dart` (461 lines)
+  - SQLite-based local storage
+  - Leave Type operations (5 methods)
+  - Leave Request operations (7 methods)
+  - Leave Balance operations (6 methods)
+  - Complex SQL queries with JOINs
+  - Comprehensive error handling
+
+- ✅ `lib/features/leaves/data/datasources/leave_remote_datasource.dart` (427 lines)
+  - API-based remote data access
+  - Leave Type operations (5 methods)
+  - Leave Request operations (9 methods including approve/reject/cancel)
+  - Leave Balance operations (5 methods including initialize)
+  - RESTful endpoint integration
+
+#### Repository Implementation
+- ✅ `lib/features/leaves/data/repositories/leave_repository_impl.dart` (723 lines)
+  - **Offline-First Architecture** implemented
+  - Leave Type operations (5 methods)
+  - Leave Request operations (9 methods)
+  - Leave Balance operations (5 methods)
+  - Network connectivity checking
+  - Automatic caching
+  - Fallback to cache when offline
+  - Comprehensive error handling
 
 ## 🚧 Remaining Work
-
-### 4. Leave Management Module Data Layer (NOT STARTED)
-- ⏳ Data Models (LeaveType, LeaveRequest, LeaveBalance)
-- ⏳ Local Data Source
-- ⏳ Remote Data Source
-- ⏳ Repository Implementation
 
 ### 5. Payroll Module Data Layer (NOT STARTED)
 - ⏳ Data Models (Payroll, SalaryComponent)
@@ -164,21 +227,22 @@ This document tracks the progress of Phase 2: Data Layer Implementation for the 
 ## 📊 Statistics
 
 ### Completed
-- **Files Created**: 15+
-- **Data Models**: 6 (Employee, Department, Position, Attendance, AttendanceRule, Holiday)
-- **Data Sources**: 2 complete sets (Employee module)
-- **Repository Implementations**: 1 complete (Employee module)
+- **Files Created**: 27+
+- **Data Models**: 9 (Employee, Department, Position, Attendance, AttendanceRule, Holiday, LeaveType, LeaveRequest, LeaveBalance)
+- **Data Sources**: 6 complete sets (Employee + Attendance + Leave modules)
+- **Repository Implementations**: 3 complete (Employee + Attendance + Leave modules)
 - **Database Tables**: 15 tables created in SQLite schema
-- **Lines of Code**: ~3,000+
+- **Lines of Code**: ~10,000+
+- **API Endpoints**: 6 added (departments, positions, attendanceRules, holidays, leaveBalances)
 
 ### In Progress
-- **Current Module**: Attendance
-- **Completion**: ~40% of Data Layer
+- **Current Module**: Code Generation & Testing
+- **Completion**: ~60% of Data Layer
 
 ### Remaining
-- **Modules**: 5 (Leaves, Payroll, Contracts, Documents, Evaluations)
-- **Estimated Files**: 25+
-- **Estimated LOC**: ~4,000+
+- **Modules**: 4 (Payroll, Contracts, Documents, Evaluations)
+- **Estimated Files**: 15+
+- **Estimated LOC**: ~2,500+
 
 ## 🎯 Key Features Implemented
 

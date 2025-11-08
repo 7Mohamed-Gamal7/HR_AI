@@ -7,26 +7,28 @@ import '../errors/exceptions.dart';
 @lazySingleton
 class ApiClient {
   late final Dio _dio;
-  
+
   ApiClient() {
     _dio = Dio(
       BaseOptions(
         baseUrl: AppConstants.baseUrl,
-        connectTimeout: Duration(milliseconds: AppConstants.connectionTimeout),
-        receiveTimeout: Duration(milliseconds: AppConstants.receiveTimeout),
+        connectTimeout:
+            const Duration(milliseconds: AppConstants.connectionTimeout),
+        receiveTimeout:
+            const Duration(milliseconds: AppConstants.receiveTimeout),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
       ),
     );
-    
+
     _dio.interceptors.add(LogInterceptor(
       requestBody: true,
       responseBody: true,
       error: true,
     ));
-    
+
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
@@ -44,7 +46,7 @@ class ApiClient {
       ),
     );
   }
-  
+
   /// GET request
   Future<Response> get(
     String path, {
@@ -61,7 +63,7 @@ class ApiClient {
       throw _handleDioError(e);
     }
   }
-  
+
   /// POST request
   Future<Response> post(
     String path, {
@@ -80,7 +82,7 @@ class ApiClient {
       throw _handleDioError(e);
     }
   }
-  
+
   /// PUT request
   Future<Response> put(
     String path, {
@@ -99,7 +101,7 @@ class ApiClient {
       throw _handleDioError(e);
     }
   }
-  
+
   /// PATCH request
   Future<Response> patch(
     String path, {
@@ -118,7 +120,7 @@ class ApiClient {
       throw _handleDioError(e);
     }
   }
-  
+
   /// DELETE request
   Future<Response> delete(
     String path, {
@@ -137,7 +139,7 @@ class ApiClient {
       throw _handleDioError(e);
     }
   }
-  
+
   /// Upload file
   Future<Response> uploadFile(
     String path,
@@ -150,7 +152,7 @@ class ApiClient {
         'file': await MultipartFile.fromFile(filePath),
         ...?data,
       });
-      
+
       return await _dio.post(
         path,
         data: formData,
@@ -160,7 +162,7 @@ class ApiClient {
       throw _handleDioError(e);
     }
   }
-  
+
   /// Download file
   Future<Response> downloadFile(
     String path,
@@ -177,7 +179,7 @@ class ApiClient {
       throw _handleDioError(e);
     }
   }
-  
+
   /// Handle Dio errors
   AppException _handleDioError(DioException error) {
     switch (error.type) {
@@ -187,11 +189,11 @@ class ApiClient {
         return const NetworkException(
           message: 'Connection timeout. Please check your internet connection.',
         );
-      
+
       case DioExceptionType.badResponse:
         final statusCode = error.response?.statusCode;
         final message = error.response?.data['message'] ?? 'An error occurred';
-        
+
         if (statusCode == 401) {
           return AuthenticationException(
             message: message,
@@ -219,28 +221,27 @@ class ApiClient {
             code: statusCode,
           );
         }
-      
+
       case DioExceptionType.cancel:
         return const NetworkException(
           message: 'Request was cancelled',
         );
-      
+
       case DioExceptionType.unknown:
         return const NetworkException(
           message: 'No internet connection',
         );
-      
+
       default:
         return const NetworkException(
           message: 'An unexpected error occurred',
         );
     }
   }
-  
+
   /// Handle general errors
   void _handleError(DioException error) {
     // Log error or perform additional error handling
     print('API Error: ${error.message}');
   }
 }
-

@@ -77,8 +77,9 @@ class EmployeeLocalDataSourceImpl implements EmployeeLocalDataSource {
         whereArgs.add(status);
       }
 
-      final whereClause =
-          whereConditions.isNotEmpty ? 'WHERE ${whereConditions.join(' AND ')}' : '';
+      final whereClause = whereConditions.isNotEmpty
+          ? 'WHERE ${whereConditions.join(' AND ')}'
+          : '';
 
       final limitClause = limit != null ? 'LIMIT $limit' : '';
       final offsetClause = offset != null ? 'OFFSET $offset' : '';
@@ -110,7 +111,7 @@ class EmployeeLocalDataSourceImpl implements EmployeeLocalDataSource {
   @override
   Future<EmployeeModel> getEmployeeById(String id) async {
     try {
-      final sql = '''
+      const sql = '''
         SELECT 
           e.*,
           d.name as department_name,
@@ -126,7 +127,7 @@ class EmployeeLocalDataSourceImpl implements EmployeeLocalDataSource {
       final results = await _databaseService.query(sql, arguments: [id]);
 
       if (results.isEmpty) {
-        throw CacheException(message: 'Employee not found in cache');
+        throw const CacheException(message: 'Employee not found in cache');
       }
 
       return EmployeeModel.fromDatabase(results.first);
@@ -140,7 +141,7 @@ class EmployeeLocalDataSourceImpl implements EmployeeLocalDataSource {
   @override
   Future<EmployeeModel> getEmployeeByCode(String code) async {
     try {
-      final sql = '''
+      const sql = '''
         SELECT 
           e.*,
           d.name as department_name,
@@ -156,7 +157,7 @@ class EmployeeLocalDataSourceImpl implements EmployeeLocalDataSource {
       final results = await _databaseService.query(sql, arguments: [code]);
 
       if (results.isEmpty) {
-        throw CacheException(message: 'Employee not found in cache');
+        throw const CacheException(message: 'Employee not found in cache');
       }
 
       return EmployeeModel.fromDatabase(results.first);
@@ -258,7 +259,7 @@ class EmployeeLocalDataSourceImpl implements EmployeeLocalDataSource {
   @override
   Future<DepartmentModel> getDepartmentById(String id) async {
     try {
-      final sql = '''
+      const sql = '''
         SELECT 
           d.*,
           m.full_name as manager_name,
@@ -271,7 +272,7 @@ class EmployeeLocalDataSourceImpl implements EmployeeLocalDataSource {
       final results = await _databaseService.query(sql, arguments: [id]);
 
       if (results.isEmpty) {
-        throw CacheException(message: 'Department not found in cache');
+        throw const CacheException(message: 'Department not found in cache');
       }
 
       return DepartmentModel.fromDatabase(results.first);
@@ -352,8 +353,9 @@ class EmployeeLocalDataSourceImpl implements EmployeeLocalDataSource {
         whereArgs.add(isActive ? 1 : 0);
       }
 
-      final whereClause =
-          whereConditions.isNotEmpty ? 'WHERE ${whereConditions.join(' AND ')}' : '';
+      final whereClause = whereConditions.isNotEmpty
+          ? 'WHERE ${whereConditions.join(' AND ')}'
+          : '';
 
       final sql = '''
         SELECT 
@@ -365,7 +367,8 @@ class EmployeeLocalDataSourceImpl implements EmployeeLocalDataSource {
         ORDER BY p.title ASC
       ''';
 
-      final results = await _databaseService.query(sql, arguments: whereArgs.isNotEmpty ? whereArgs : null);
+      final results = await _databaseService.query(sql,
+          arguments: whereArgs.isNotEmpty ? whereArgs : null);
       return results.map((map) => PositionModel.fromDatabase(map)).toList();
     } catch (e) {
       throw CacheException(
@@ -377,7 +380,7 @@ class EmployeeLocalDataSourceImpl implements EmployeeLocalDataSource {
   @override
   Future<PositionModel> getPositionById(String id) async {
     try {
-      final sql = '''
+      const sql = '''
         SELECT 
           p.*,
           d.name as department_name
@@ -389,7 +392,7 @@ class EmployeeLocalDataSourceImpl implements EmployeeLocalDataSource {
       final results = await _databaseService.query(sql, arguments: [id]);
 
       if (results.isEmpty) {
-        throw CacheException(message: 'Position not found in cache');
+        throw const CacheException(message: 'Position not found in cache');
       }
 
       return PositionModel.fromDatabase(results.first);
@@ -449,4 +452,3 @@ class EmployeeLocalDataSourceImpl implements EmployeeLocalDataSource {
     }
   }
 }
-

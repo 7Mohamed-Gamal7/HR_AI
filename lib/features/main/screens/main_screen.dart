@@ -123,7 +123,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     final isArabic = context.locale.languageCode == 'ar';
-    
+
     if (_isLoading) {
       return Scaffold(
         body: Center(
@@ -148,7 +148,7 @@ class _MainScreenState extends State<MainScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
+              const Icon(
                 Icons.error_outline,
                 size: 64,
                 color: AppTheme.errorColor,
@@ -217,44 +217,46 @@ class _MainScreenState extends State<MainScreen> {
               onDestinationSelected: _onItemSelected,
               labelType: NavigationRailLabelType.all,
               backgroundColor: AppTheme.cardColor,
-              selectedIconTheme: IconThemeData(color: AppTheme.primaryColor),
-              selectedLabelTextStyle: TextStyle(color: AppTheme.primaryColor),
-              destinations: [
-                const NavigationRailDestination(
+              selectedIconTheme:
+                  const IconThemeData(color: AppTheme.primaryColor),
+              selectedLabelTextStyle:
+                  const TextStyle(color: AppTheme.primaryColor),
+              destinations: const [
+                NavigationRailDestination(
                   icon: Icon(Icons.dashboard_outlined),
                   selectedIcon: Icon(Icons.dashboard),
                   label: Text('الرئيسية'),
                 ),
-                const NavigationRailDestination(
+                NavigationRailDestination(
                   icon: Icon(Icons.people_outline),
                   selectedIcon: Icon(Icons.people),
                   label: Text('الموظفين'),
                 ),
-                const NavigationRailDestination(
+                NavigationRailDestination(
                   icon: Icon(Icons.fingerprint_outlined),
                   selectedIcon: Icon(Icons.fingerprint),
                   label: Text('الحضور'),
                 ),
-                const NavigationRailDestination(
+                NavigationRailDestination(
                   icon: Icon(Icons.beach_access_outlined),
                   selectedIcon: Icon(Icons.beach_access),
                   label: Text('الإجازات'),
                 ),
-                const NavigationRailDestination(
+                NavigationRailDestination(
                   icon: Icon(Icons.attach_money_outlined),
                   selectedIcon: Icon(Icons.attach_money),
                   label: Text('المرتبات'),
                 ),
               ],
             ),
-          
+
           // المحتوى الرئيسي
           Expanded(
             child: _pages[_selectedIndex],
           ),
         ],
       ),
-      
+
       // Bottom Navigation Bar للشاشات الصغيرة
       bottomNavigationBar: MediaQuery.of(context).size.width < 600
           ? NavigationBar(
@@ -284,7 +286,8 @@ class DashboardScreen extends StatelessWidget {
               GridView.count(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: MediaQuery.of(context).size.width >= 600 ? 4 : 2,
+                crossAxisCount:
+                    MediaQuery.of(context).size.width >= 600 ? 4 : 2,
                 mainAxisSpacing: 16,
                 crossAxisSpacing: 16,
                 children: [
@@ -319,7 +322,7 @@ class DashboardScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 24),
-              
+
               // أحدث الموظفين
               Card(
                 child: Padding(
@@ -330,8 +333,8 @@ class DashboardScreen extends StatelessWidget {
                       Text(
                         'أحدث الموظفين',
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                       const SizedBox(height: 16),
                       if (appProvider.employees.isEmpty)
@@ -354,7 +357,8 @@ class DashboardScreen extends StatelessWidget {
                                 ),
                               ),
                               title: Text(employee.fullName),
-                              subtitle: Text(employee.jobTitle?.name ?? 'غير محدد'),
+                              subtitle:
+                                  Text(employee.jobTitle?.name ?? 'غير محدد'),
                               trailing: Text(
                                 employee.employeeNumber,
                                 style: Theme.of(context).textTheme.bodySmall,
@@ -396,9 +400,9 @@ class DashboardScreen extends StatelessWidget {
             Text(
               value,
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: color,
-              ),
+                    fontWeight: FontWeight.bold,
+                    color: color,
+                  ),
             ),
             const SizedBox(height: 4),
             Text(

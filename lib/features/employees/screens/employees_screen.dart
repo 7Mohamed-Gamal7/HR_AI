@@ -17,8 +17,8 @@ class EmployeesScreen extends StatefulWidget {
 class _EmployeesScreenState extends State<EmployeesScreen> {
   String _searchQuery = '';
   String _selectedDepartment = 'all';
-  String _selectedStatus = 'all';
-  
+  final String _selectedStatus = 'all';
+
   @override
   void initState() {
     super.initState();
@@ -31,7 +31,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
   @override
   Widget build(BuildContext context) {
     final isArabic = context.locale.languageCode == 'ar';
-    
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('إدارة الموظفين'),
@@ -63,7 +63,8 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.error_outline, size: 64, color: AppTheme.errorColor),
+                  const Icon(Icons.error_outline,
+                      size: 64, color: AppTheme.errorColor),
                   const SizedBox(height: 16),
                   Text(
                     'حدث خطأ: ${appProvider.error}',
@@ -86,10 +87,10 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
             children: [
               // إحصائيات سريعة
               _buildStatisticsCard(appProvider.employees, filteredEmployees),
-              
+
               // شريط البحث والتصفية
               _buildSearchAndFilterBar(),
-              
+
               // قائمة الموظفين
               Expanded(
                 child: _buildEmployeeList(filteredEmployees, appProvider),
@@ -101,16 +102,17 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showEmployeeForm(),
         backgroundColor: AppTheme.primaryColor,
-        child: const Icon(Icons.person_add),
         tooltip: 'إضافة موظف جديد',
+        child: const Icon(Icons.person_add),
       ),
     );
   }
 
-  Widget _buildStatisticsCard(List<Employee> allEmployees, List<Employee> filteredEmployees) {
+  Widget _buildStatisticsCard(
+      List<Employee> allEmployees, List<Employee> filteredEmployees) {
     final activeEmployees = allEmployees.where((e) => e.isActive).length;
     final totalEmployees = allEmployees.length;
-    
+
     return Card(
       margin: const EdgeInsets.all(16),
       child: Padding(
@@ -118,9 +120,12 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _buildStatisticItem('إجمالي الموظفين', totalEmployees.toString(), AppTheme.primaryColor),
-            _buildStatisticItem('النشطين', activeEmployees.toString(), AppTheme.successColor),
-            _buildStatisticItem('النتائج الحالية', filteredEmployees.length.toString(), AppTheme.accentColor),
+            _buildStatisticItem('إجمالي الموظفين', totalEmployees.toString(),
+                AppTheme.primaryColor),
+            _buildStatisticItem(
+                'النشطين', activeEmployees.toString(), AppTheme.successColor),
+            _buildStatisticItem('النتائج الحالية',
+                filteredEmployees.length.toString(), AppTheme.accentColor),
           ],
         ),
       ),
@@ -174,8 +179,8 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
             DropdownButton<String>(
               value: _selectedDepartment,
               hint: const Text('القسم'),
-              items: [
-                const DropdownMenuItem(value: 'all', child: Text('جميع الأقسام')),
+              items: const [
+                DropdownMenuItem(value: 'all', child: Text('جميع الأقسام')),
                 // TODO: Add departments from provider
               ],
               onChanged: (value) {
@@ -242,7 +247,8 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${employee.employeeNumber} • ${employee.jobTitle?.name ?? 'غير محدد'}'),
+            Text(
+                '${employee.employeeNumber} • ${employee.jobTitle?.name ?? 'غير محدد'}'),
             Text('القسم: ${employee.department?.name ?? 'غير محدد'}'),
           ],
         ),
@@ -300,12 +306,12 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                     ],
                   ),
                 ),
-                PopupMenuItem(
+                const PopupMenuItem(
                   value: 'delete',
                   child: Row(
                     children: [
                       Icon(Icons.delete, size: 20, color: AppTheme.errorColor),
-                      const SizedBox(width: 8),
+                      SizedBox(width: 8),
                       Text('حذف', style: TextStyle(color: AppTheme.errorColor)),
                     ],
                   ),
@@ -332,7 +338,8 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
       }
 
       // تصفية حسب القسم
-      if (_selectedDepartment != 'all' && employee.department?.name != _selectedDepartment) {
+      if (_selectedDepartment != 'all' &&
+          employee.department?.name != _selectedDepartment) {
         return false;
       }
 
@@ -383,8 +390,8 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
               try {
                 await appProvider.deleteEmployee(employee.id!);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: const Text('تم حذف الموظف بنجاح'),
+                  const SnackBar(
+                    content: Text('تم حذف الموظف بنجاح'),
                     backgroundColor: AppTheme.successColor,
                   ),
                 );

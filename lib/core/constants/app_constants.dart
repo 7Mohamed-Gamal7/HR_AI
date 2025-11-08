@@ -4,20 +4,20 @@ class AppConstants {
   static const String appName = 'HR Management System';
   static const String appNameAr = 'نظام إدارة الموارد البشرية';
   static const String appVersion = '1.0.0';
-  
+
   // Database
   static const String databaseName = 'hrms_database.db';
   static const int databaseVersion = 1;
-  
+
   // API Configuration
   static const String baseUrl = 'https://api.hrms.com/v1';
   static const int connectionTimeout = 30000; // 30 seconds
   static const int receiveTimeout = 30000;
-  
+
   // Pagination
   static const int defaultPageSize = 20;
   static const int maxPageSize = 100;
-  
+
   // Date Formats
   static const String dateFormat = 'yyyy-MM-dd';
   static const String dateTimeFormat = 'yyyy-MM-dd HH:mm:ss';
@@ -25,40 +25,51 @@ class AppConstants {
   static const String displayDateTimeFormat = 'dd/MM/yyyy hh:mm a';
   static const String timeFormat = 'HH:mm';
   static const String displayTimeFormat = 'hh:mm a';
-  
+
   // File Upload
   static const int maxFileSize = 10 * 1024 * 1024; // 10 MB
-  static const List<String> allowedImageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-  static const List<String> allowedDocumentExtensions = ['pdf', 'doc', 'docx', 'xls', 'xlsx'];
-  
+  static const List<String> allowedImageExtensions = [
+    'jpg',
+    'jpeg',
+    'png',
+    'gif',
+  ];
+  static const List<String> allowedDocumentExtensions = [
+    'pdf',
+    'doc',
+    'docx',
+    'xls',
+    'xlsx',
+  ];
+
   // Encryption
   static const String encryptionKey = 'your-32-character-encryption-key-here';
-  
+
   // Session
   static const int sessionTimeout = 3600; // 1 hour in seconds
   static const int refreshTokenBeforeExpiry = 300; // 5 minutes
-  
+
   // Attendance
   static const int defaultWorkHoursPerDay = 8;
   static const int defaultWorkDaysPerWeek = 5;
   static const int defaultLateMinutesAllowed = 15;
   static const int defaultEarlyDepartureMinutesAllowed = 15;
-  
+
   // Leave
   static const int defaultAnnualLeaveDays = 21;
   static const int defaultSickLeaveDays = 14;
   static const int maxConsecutiveLeaveDays = 30;
-  
+
   // Payroll
   static const String defaultCurrency = 'EGP';
   static const String defaultCurrencySymbol = 'ج.م';
-  
+
   // Notifications
   static const int notificationReminderDays = 7; // Days before contract expiry
-  
+
   // Cache
   static const int cacheExpiryDuration = 3600; // 1 hour in seconds
-  
+
   // Biometric
   static const int biometricMaxRetries = 3;
   static const int biometricTimeout = 30; // seconds
@@ -74,6 +85,7 @@ class TableNames {
   static const String leaves = 'leaves';
   static const String leaveTypes = 'leave_types';
   static const String leaveRequests = 'leave_requests';
+  static const String leaveBalances = 'leave_balances';
   static const String payroll = 'payroll';
   static const String salaryComponents = 'salary_components';
   static const String contracts = 'contracts';
@@ -103,41 +115,45 @@ class ApiEndpoints {
   static const String logout = '/auth/logout';
   static const String refreshToken = '/auth/refresh';
   static const String changePassword = '/auth/change-password';
-  
+
   // Employees
   static const String employees = '/employees';
   static const String employeeById = '/employees/{id}';
   static const String employeesByDepartment = '/employees/department/{id}';
-  
+  static const String departments = '/departments';
+  static const String positions = '/positions';
+
   // Attendance
   static const String attendance = '/attendance';
   static const String attendanceByEmployee = '/attendance/employee/{id}';
   static const String attendanceReport = '/attendance/report';
   static const String checkIn = '/attendance/check-in';
   static const String checkOut = '/attendance/check-out';
-  
+  static const String attendanceRules = '/attendance-rules';
+  static const String holidays = '/holidays';
+
   // Leaves
   static const String leaves = '/leaves';
   static const String leaveRequest = '/leaves/request';
   static const String leaveApproval = '/leaves/approve/{id}';
   static const String leaveRejection = '/leaves/reject/{id}';
-  
+
   // Payroll
   static const String payroll = '/payroll';
   static const String payrollGenerate = '/payroll/generate';
   static const String payslip = '/payroll/payslip/{id}';
-  
+
   // Reports
   static const String reports = '/reports';
   static const String reportAttendance = '/reports/attendance';
   static const String reportPayroll = '/reports/payroll';
   static const String reportLeaves = '/reports/leaves';
-  
+
   // Documents
   static const String documents = '/documents';
   static const String documentUpload = '/documents/upload';
   static const String documentDownload = '/documents/download/{id}';
-  
+
   // Biometric
   static const String biometricDevices = '/biometric/devices';
   static const String biometricSync = '/biometric/sync';
@@ -167,27 +183,27 @@ class PermissionTypes {
   static const String createEmployee = 'create_employee';
   static const String editEmployee = 'edit_employee';
   static const String deleteEmployee = 'delete_employee';
-  
+
   // Attendance permissions
   static const String viewAttendance = 'view_attendance';
   static const String manageAttendance = 'manage_attendance';
   static const String viewOwnAttendance = 'view_own_attendance';
-  
+
   // Leave permissions
   static const String viewLeaves = 'view_leaves';
   static const String requestLeave = 'request_leave';
   static const String approveLeave = 'approve_leave';
   static const String rejectLeave = 'reject_leave';
-  
+
   // Payroll permissions
   static const String viewPayroll = 'view_payroll';
   static const String managePayroll = 'manage_payroll';
   static const String viewOwnPayroll = 'view_own_payroll';
-  
+
   // Report permissions
   static const String viewReports = 'view_reports';
   static const String exportReports = 'export_reports';
-  
+
   // System permissions
   static const String manageSettings = 'manage_settings';
   static const String manageUsers = 'manage_users';
@@ -281,4 +297,3 @@ class MaritalStatus {
   static const String divorced = 'divorced';
   static const String widowed = 'widowed';
 }
-
