@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:hr_management_system/core/services/database_service.dart';
 import 'package:hr_management_system/core/services/auth_service.dart';
+import 'package:hr_management_system/core/repositories/employees_repository.dart';
 import 'package:hr_management_system/features/employees/models/employee_model.dart';
 import 'package:hr_management_system/features/employees/models/department_model.dart';
 import 'package:hr_management_system/features/attendance/models/attendance_model.dart';
@@ -877,3 +878,23 @@ class AppProvider extends ChangeNotifier {
     ]);
   }
 }
+  final EmployeesRepository _employeesRepository = EmployeesRepository();
+
+  Future<void> loadEmployeesRemote({Map<String, dynamic>? query}) async {
+    _setLoading(true);
+    try {
+      final list = await _employeesRepository.list(query: query);
+      _employees = list;
+      _totalItems = list.length;
+      notifyListeners();
+    } catch (e) {
+      setError('خطأ في تحميل الموظفين من الخادم: $e');
+    } finally {
+      _setLoading(false);
+    }
+  }
+
+  void _setLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }

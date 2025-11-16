@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'core/services/database_service.dart';
-import 'core/services/auth_service.dart';
-import 'core/providers/app_provider.dart';
-import 'core/theme/app_theme.dart';
-import 'core/routes/app_routes.dart';
-import 'features/auth/screens/login_screen.dart';
-import 'features/main/screens/main_screen.dart';
+import 'package:hr_management_system/core/services/database_service.dart';
+import 'package:hr_management_system/core/services/auth_service.dart';
+import 'package:hr_management_system/core/providers/app_provider.dart';
+import 'package:hr_management_system/core/theme/app_theme.dart';
+import 'package:hr_management_system/core/routes/app_routes.dart';
+import 'package:hr_management_system/features/auth/screens/login_screen.dart';
+import 'package:hr_management_system/features/main/screens/main_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -71,22 +71,7 @@ class HRMApp extends StatelessWidget {
         locale: context.locale,
         debugShowCheckedModeBanner: false,
         initialRoute: AppRoutes.login,
-        onGenerateRoute: (settings) {
-          switch (settings.name) {
-            case AppRoutes.login:
-              return MaterialPageRoute(
-                builder: (context) => const LoginScreen(),
-              );
-            case AppRoutes.home:
-              return MaterialPageRoute(
-                builder: (context) => const MainScreen(),
-              );
-            default:
-              return MaterialPageRoute(
-                builder: (context) => const LoginScreen(),
-              );
-          }
-        },
+        onGenerateRoute: AppRoutes.onGenerateRoute,
       ),
     );
   }

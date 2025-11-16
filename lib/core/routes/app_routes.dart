@@ -1,31 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management_system/features/auth/screens/login_screen.dart';
+import 'package:hr_management_system/features/main/screens/main_screen.dart';
 import 'package:hr_management_system/features/employees/screens/employees_screen.dart';
 import 'package:hr_management_system/features/attendance/screens/attendance_screen.dart';
 import 'package:hr_management_system/features/leaves/screens/leaves_screen.dart';
 import 'package:hr_management_system/features/payroll/screens/payroll_screen.dart';
-import 'package:hr_management_system/features/evaluations/screens/evaluations_screen.dart';
-import 'package:hr_management_system/features/documents/screens/documents_screen.dart';
-import 'package:hr_management_system/features/reports/screens/reports_screen.dart';
-import 'package:hr_management_system/features/settings/screens/settings_screen.dart';
-import 'package:hr_management_system/features/auth/screens/login_screen.dart';
-import 'package:hr_management_system/features/dashboard/screens/dashboard_screen.dart';
-import 'package:hr_management_system/features/employees/screens/employee_detail_screen.dart';
-import 'package:hr_management_system/features/employees/screens/add_employee_screen.dart';
 
 class AppRoutes {
   // المسارات الأساسية
   static const String login = '/login';
   static const String dashboard = '/dashboard';
   static const String employees = '/employees';
-  static const String employeeDetail = '/employee-detail';
-  static const String addEmployee = '/add-employee';
+  // يمكن إضافة تفاصيل الموظف لاحقاً
   static const String attendance = '/attendance';
   static const String leaves = '/leaves';
   static const String payroll = '/payroll';
-  static const String evaluations = '/evaluations';
-  static const String documents = '/documents';
-  static const String reports = '/reports';
-  static const String settings = '/settings';
+  // مسارات لاحقة: التقييمات/الوثائق/التقارير/الإعدادات
   
   // المسارات الفرعية
   static const String attendanceRules = '/attendance/rules';
@@ -53,28 +43,13 @@ class AppRoutes {
         
       case dashboard:
         return MaterialPageRoute(
-          builder: (_) => const DashboardScreen(),
+          builder: (_) => const MainScreen(),
           settings: settings,
         );
         
       case employees:
         return MaterialPageRoute(
           builder: (_) => const EmployeesScreen(),
-          settings: settings,
-        );
-        
-      case employeeDetail:
-        final args = settings.arguments as Map<String, dynamic>?;
-        return MaterialPageRoute(
-          builder: (_) => EmployeeDetailScreen(
-            employeeId: args?['employeeId'] ?? '',
-          ),
-          settings: settings,
-        );
-        
-      case addEmployee:
-        return MaterialPageRoute(
-          builder: (_) => const AddEmployeeScreen(),
           settings: settings,
         );
         
@@ -93,30 +68,6 @@ class AppRoutes {
       case payroll:
         return MaterialPageRoute(
           builder: (_) => const PayrollScreen(),
-          settings: settings,
-        );
-        
-      case evaluations:
-        return MaterialPageRoute(
-          builder: (_) => const EvaluationsScreen(),
-          settings: settings,
-        );
-        
-      case documents:
-        return MaterialPageRoute(
-          builder: (_) => const DocumentsScreen(),
-          settings: settings,
-        );
-        
-      case reports:
-        return MaterialPageRoute(
-          builder: (_) => const ReportsScreen(),
-          settings: settings,
-        );
-        
-      case settings:
-        return MaterialPageRoute(
-          builder: (_) => const SettingsScreen(),
           settings: settings,
         );
         
