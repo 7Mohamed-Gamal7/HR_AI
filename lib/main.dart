@@ -7,8 +7,6 @@ import 'package:hr_management_system/core/services/auth_service.dart';
 import 'package:hr_management_system/core/providers/app_provider.dart';
 import 'package:hr_management_system/core/theme/app_theme.dart';
 import 'package:hr_management_system/core/routes/app_routes.dart';
-import 'package:hr_management_system/features/auth/screens/login_screen.dart';
-import 'package:hr_management_system/features/main/screens/main_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
