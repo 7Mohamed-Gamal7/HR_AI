@@ -109,20 +109,15 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
         SizedBox(
           width: 200,
           child: DropdownButtonFormField<String>(
-            value: appProvider.attendanceStatusFilter,
+            initialValue: appProvider.attendanceStatusFilter,
             decoration: InputDecoration(
               labelText: 'attendance.status.title'.tr(),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8.0),
               ),
             ),
-            items: [
-              'all',
-              'present',
-              'absent',
-              'late',
-              'on_leave'
-            ].map((status) {
+            items:
+                ['all', 'present', 'absent', 'late', 'on_leave'].map((status) {
               return DropdownMenuItem(
                 value: status,
                 child: Text('attendance.status.$status'.tr()),
@@ -151,31 +146,42 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   }
 
   Widget _buildStats(BuildContext context, List<AttendanceRecord> records) {
-    final present = records.where((r) => r.status == AttendanceStatus.present).length;
-    final absent = records.where((r) => r.status == AttendanceStatus.absent).length;
+    final present =
+        records.where((r) => r.status == AttendanceStatus.present).length;
+    final absent =
+        records.where((r) => r.status == AttendanceStatus.absent).length;
     final late = records.where((r) => r.isLate).length;
-    final onLeave = records.where((r) => r.status == AttendanceStatus.onLeave).length;
+    final onLeave =
+        records.where((r) => r.status == AttendanceStatus.onLeave).length;
 
     return Wrap(
       spacing: 16,
       runSpacing: 16,
       children: [
-        _buildStatCard(context, 'attendance.status.present'.tr(), present.toString(), Colors.green),
-        _buildStatCard(context, 'attendance.status.absent'.tr(), absent.toString(), Colors.red),
-        _buildStatCard(context, 'attendance.status.late'.tr(), late.toString(), Colors.orange),
-        _buildStatCard(context, 'attendance.status.on_leave'.tr(), onLeave.toString(), Colors.blue),
+        _buildStatCard(context, 'attendance.status.present'.tr(),
+            present.toString(), Colors.green),
+        _buildStatCard(context, 'attendance.status.absent'.tr(),
+            absent.toString(), Colors.red),
+        _buildStatCard(context, 'attendance.status.late'.tr(), late.toString(),
+            Colors.orange),
+        _buildStatCard(context, 'attendance.status.on_leave'.tr(),
+            onLeave.toString(), Colors.blue),
       ],
     );
   }
 
-  Widget _buildStatCard(BuildContext context, String title, String value, Color color) {
+  Widget _buildStatCard(
+      BuildContext context, String title, String value, Color color) {
     return CustomCard(
       width: 150,
       child: Column(
         children: [
           Text(
             value,
-            style: AppTheme.of(context).typography.headlineMedium.copyWith(color: color),
+            style: AppTheme.of(context)
+                .typography
+                .headlineMedium
+                .copyWith(color: color),
           ),
           const SizedBox(height: 8),
           Text(
@@ -187,7 +193,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     );
   }
 
-  Widget _buildAttendanceList(BuildContext context, List<AttendanceRecord> records) {
+  Widget _buildAttendanceList(
+      BuildContext context, List<AttendanceRecord> records) {
     if (records.isEmpty) {
       return Center(child: Text('attendance.no_records'.tr()));
     }
@@ -198,20 +205,23 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
         final record = records[index];
         final employee = Provider.of<AppProvider>(context, listen: false)
             .employees
-            .firstWhere((e) => e.id == record.employeeId, orElse: () => Employee.empty());
-        
+            .firstWhere((e) => e.id == record.employeeId,
+                orElse: () => Employee.empty());
+
         return _buildAttendanceCard(context, record, employee);
       },
     );
   }
 
-  Widget _buildAttendanceCard(BuildContext context, AttendanceRecord record, Employee employee) {
+  Widget _buildAttendanceCard(
+      BuildContext context, AttendanceRecord record, Employee employee) {
     return CustomCard(
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: ListTile(
         leading: CircleAvatar(
           // backgroundImage: NetworkImage(employee.profileImageUrl), // If you have profile images
-          child: Text(employee.fullName.isNotEmpty ? employee.fullName[0] : '?'),
+          child:
+              Text(employee.fullName.isNotEmpty ? employee.fullName[0] : '?'),
         ),
         title: Text(employee.fullName),
         subtitle: Text(
@@ -252,10 +262,16 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
       final statusMatch = appProvider.attendanceStatusFilter == 'all' ||
           record.status.name == appProvider.attendanceStatusFilter;
 
-      final employee = appProvider.employees.firstWhere((e) => e.id == record.employeeId, orElse: () => Employee.empty());
+      final employee = appProvider.employees.firstWhere(
+          (e) => e.id == record.employeeId,
+          orElse: () => Employee.empty());
       final searchMatch = appProvider.searchQuery.isEmpty ||
-          employee.fullName.toLowerCase().contains(appProvider.searchQuery.toLowerCase()) ||
-          employee.employeeNumber.toLowerCase().contains(appProvider.searchQuery.toLowerCase());
+          employee.fullName
+              .toLowerCase()
+              .contains(appProvider.searchQuery.toLowerCase()) ||
+          employee.employeeNumber
+              .toLowerCase()
+              .contains(appProvider.searchQuery.toLowerCase());
 
       return statusMatch && searchMatch;
     }).toList();
@@ -268,7 +284,9 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
       builder: (BuildContext context) {
         // A simplified form for adding/editing a record
         return AlertDialog(
-          title: Text(record == null ? 'attendance.add_record'.tr() : 'attendance.edit_record'.tr()),
+          title: Text(record == null
+              ? 'attendance.add_record'.tr()
+              : 'attendance.edit_record'.tr()),
           content: Text('form.not_implemented'.tr()), // Placeholder
           actions: [
             TextButton(
@@ -294,7 +312,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('delete.confirm_title'.tr()),
-          content: Text('delete.confirm_message'.tr(args: ['attendance.record'.tr()])),
+          content: Text(
+              'delete.confirm_message'.tr(args: ['attendance.record'.tr()])),
           actions: [
             TextButton(
               child: Text('cancel'.tr()),

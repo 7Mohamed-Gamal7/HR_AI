@@ -6,7 +6,7 @@ import 'package:hr_management/core/widgets/custom_app_bar.dart';
 import 'package:hr_management/core/widgets/custom_drawer.dart';
 
 class PayrollScreen extends StatefulWidget {
-  const PayrollScreen({Key? key}) : super(key: key);
+  const PayrollScreen({super.key});
 
   @override
   State<PayrollScreen> createState() => _PayrollScreenState();
@@ -76,7 +76,8 @@ class _PayrollScreenState extends State<PayrollScreen> {
                   DropdownButton<String>(
                     value: appProvider.payrollPeriodFilter,
                     items: const [
-                      DropdownMenuItem(value: 'all', child: Text('جميع الفترات')),
+                      DropdownMenuItem(
+                          value: 'all', child: Text('جميع الفترات')),
                       DropdownMenuItem(value: 'open', child: Text('مفتوحة')),
                       DropdownMenuItem(value: 'closed', child: Text('مغلقة')),
                     ],
@@ -90,8 +91,10 @@ class _PayrollScreenState extends State<PayrollScreen> {
                   DropdownButton<String>(
                     value: appProvider.paymentStatusFilter,
                     items: const [
-                      DropdownMenuItem(value: 'all', child: Text('جميع الحالات')),
-                      DropdownMenuItem(value: 'pending', child: Text('قيد الانتظار')),
+                      DropdownMenuItem(
+                          value: 'all', child: Text('جميع الحالات')),
+                      DropdownMenuItem(
+                          value: 'pending', child: Text('قيد الانتظار')),
                       DropdownMenuItem(value: 'paid', child: Text('مدفوع')),
                     ],
                     onChanged: (value) {
@@ -127,11 +130,11 @@ class _PayrollScreenState extends State<PayrollScreen> {
           });
         },
         style: TextButton.styleFrom(
-          backgroundColor: _selectedTab == tab 
-              ? Theme.of(context).primaryColor 
+          backgroundColor: _selectedTab == tab
+              ? Theme.of(context).primaryColor
               : Colors.transparent,
-          foregroundColor: _selectedTab == tab 
-              ? Colors.white 
+          foregroundColor: _selectedTab == tab
+              ? Colors.white
               : Theme.of(context).primaryColor,
           padding: const EdgeInsets.symmetric(vertical: 16),
         ),
@@ -241,8 +244,9 @@ class _PayrollScreenState extends State<PayrollScreen> {
 
   Widget _buildEmployeeSalariesList(AppProvider appProvider) {
     final salaries = appProvider.employeeSalaries.where((salary) {
-      final employee = appProvider.employees
-          .firstWhere((emp) => emp.id == salary.employeeId, orElse: () => null as dynamic);
+      final employee = appProvider.employees.firstWhere(
+          (emp) => emp.id == salary.employeeId,
+          orElse: () => null as dynamic);
       final matchesSearch = _searchController.text.isEmpty ||
           (employee != null && employee.name.contains(_searchController.text));
       final matchesFilter = appProvider.paymentStatusFilter == 'all' ||
@@ -258,8 +262,9 @@ class _PayrollScreenState extends State<PayrollScreen> {
       itemCount: salaries.length,
       itemBuilder: (context, index) {
         final salary = salaries[index];
-        final employee = appProvider.employees
-            .firstWhere((emp) => emp.id == salary.employeeId, orElse: () => null as dynamic);
+        final employee = appProvider.employees.firstWhere(
+            (emp) => emp.id == salary.employeeId,
+            orElse: () => null as dynamic);
         final employeeName = employee?.name ?? 'موظف غير معروف';
 
         return Card(
